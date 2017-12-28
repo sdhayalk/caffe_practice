@@ -19,3 +19,5 @@ print("\ndir(net.params):", dir(net.params))
 print("\nnet.blobs['data']:", net.blobs['data'])
 print("\nnet.blobs['data'].data:", net.blobs['data'].data)
 print("\nnet.blobs['conv'].data.shape:", net.blobs['conv'].data.shape)
+for i in range(0, len(net.params['conv'])):
+	print("\nnet.params['conv']["+str(i)+"]:", net.params['conv'][i])
