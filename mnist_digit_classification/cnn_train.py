@@ -2,6 +2,7 @@
 references from:
 	http://caffe.berkeleyvision.org/gathered/examples/mnist.html
 	https://github.com/nitnelave/pycaffe_tutorial
+	https://stackoverflow.com/questions/32379878/cheat-sheet-for-caffe-pycaffe
 '''
 
 import caffe
@@ -14,7 +15,10 @@ else:
     caffe.set_mode_cpu()
 
 CNN_NETWORK_PATH = "G:/DL/caffe_practice/mnist_digit_classification/cnn_network.prototxt"
+CNN_SOLVER_PATH = "G:/DL/caffe_practice/mnist_digit_classification/cnn_solver.prototxt"
+
 net = caffe.Net(CNN_NETWORK_PATH, caffe.TRAIN) # caffe.TEST for testing
+solver = caffe.AdamSolver(CNN_SOLVER_PATH)
 
 print("Network layers information:")
 for name, layer in zip(net._layer_names, net.layers):
@@ -24,4 +28,6 @@ for name, blob in net.blobs.items():
     print("{:<7}: {}".format(name, blob.data.shape))
 print('net.inputs:', net.inputs)
 print('net.outputs:', net.outputs)
+
+solver.solve()
 

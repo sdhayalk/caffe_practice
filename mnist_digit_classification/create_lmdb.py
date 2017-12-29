@@ -30,14 +30,14 @@ def get_dataset_features_labels_np(dataset_path):
     dataset_features = np.array(dataset[:, 1:], dtype='float')
     dataset_labels_temp = np.array(dataset[:, 0], dtype='int')
 
-    # dataset_labels = []
-    # for element in dataset_labels_temp:
-    #     temp = np.zeros(10, dtype='int')    # number of classes is 10
-    #     temp[int(element)] = 1
-    #     dataset_labels.append(temp)
-    # dataset_labels = np.array(dataset_labels, dtype='int')
+    dataset_labels = []
+    for element in dataset_labels_temp:
+        temp = np.zeros(10, dtype='int')    # number of classes is 10
+        temp[int(element)] = 1
+        dataset_labels.append(temp)
+    dataset_labels = np.array(dataset_labels, dtype='int')
 
-    return dataset_features.reshape((dataset_features.shape[0],1,28,28)), dataset_labels_temp.reshape((dataset_labels_temp.shape[0]))
+    return dataset_features.reshape((dataset_features.shape[0],1,28,28)), dataset_labels
 
 
 dataset_train_path = 'G:/DL/mnist_data_for_caffe/train.csv'
@@ -59,7 +59,7 @@ with env.begin(write=True) as txn:
         datum.height = dataset_train_features.shape[2]
         datum.width = dataset_train_features.shape[3]
         datum.data = dataset_train_features[i].tobytes()  # or .tostring() if numpy < 1.9
-        datum.label = int(dataset_train_labels[i])
+        datum.label = dataset_train_labels[i]
         str_id = '{:08}'.format(i)
 
         # The encode is only essential in Python 3
