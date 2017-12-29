@@ -1,5 +1,7 @@
 '''
-referred from: http://deepdish.io/2015/04/28/creating-lmdb-in-python/
+referred from: 
+    http://deepdish.io/2015/04/28/creating-lmdb-in-python/
+    https://github.com/sdhayalk/MNIST_Digit_Recognizer_Kaggle/blob/master/preprocessing.py
 '''
 
 import caffe

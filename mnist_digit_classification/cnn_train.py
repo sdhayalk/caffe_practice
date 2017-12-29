@@ -16,9 +16,12 @@ else:
 CNN_NETWORK_PATH = "G:/DL/caffe_practice/mnist_digit_classification/cnn_network.prototxt"
 net = caffe.Net(CNN_NETWORK_PATH, caffe.TRAIN) # caffe.TEST for testing
 
-# print("Network layers information:")
-# for name, layer in zip(net._layer_names, net.layers):
-#     print("{:<7}: {:17s}({} blobs)".format(name, layer.type, len(layer.blobs)))
-# print("Network blobs information:")
-# for name, blob in net.blobs.iteritems():
-#     print("{:<7}: {}".format(name, blob.data.shape))
+print("Network layers information:")
+for name, layer in zip(net._layer_names, net.layers):
+    print("{:<7}: {:17s}({} blobs)".format(name, layer.type, len(layer.blobs)))
+print("Network blobs information:")
+for name, blob in net.blobs.items():
+    print("{:<7}: {}".format(name, blob.data.shape))
+print('net.inputs:', net.inputs)
+print('net.outputs:', net.outputs)
+
