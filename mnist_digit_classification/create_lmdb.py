@@ -47,7 +47,7 @@ print(dataset_train_features.shape, dataset_train_labels.shape)
 
 
 # Labels
-env = lmdb.open('lmdb_data_name', map_size=int(3e8))
+env = lmdb.open(lmdb_data_name, map_size=int(6e8))
 
 with env.begin(write=True) as txn:
     # txn is a Transaction object
