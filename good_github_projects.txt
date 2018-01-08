@@ -1,0 +1,15 @@
+1)
+https://github.com/AlfredXiangWu/face_verification_experiment
+
+2)
+https://github.com/davidbrai/deep-learning-traffic-lights
+https://medium.com/@davidbrai/recognizing-traffic-lights-with-deep-learning-23dae23287cc
+
+3)
+https://github.com/chuanqi305/MobileNet-SSD
+
+4)
+https://github.com/TimoSaemann/ENet
+
+5)
+https://github.com/richzhang/colorization
