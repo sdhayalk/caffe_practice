@@ -1,3 +1,6 @@
+'''
+referred from: http://nbviewer.jupyter.org/github/BVLC/caffe/blob/master/examples/00-classification.ipynb
+'''
 import caffe
 import numpy as np
 import matplotlib.pyplot as plt
@@ -15,6 +18,7 @@ def download_model():
 
 
 caffe_root = "G:/DL/caffe-master/caffe-master/"	# caffe path
+download_model()
 caffe.set_mode_gpu()
 
 model_def = caffe_root + 'models/bvlc_reference_caffenet/deploy.prototxt'
@@ -47,9 +51,28 @@ net.blobs['data'].reshape(50, 3, 227, 227)  	# params: batch_size, num_channels,
 image = caffe.io.load_image(caffe_root + 'examples/images/cat.jpg')	# load the image
 transformed_image = transformer.preprocess('data', image)			# transform the image
 plt.imshow(image)													# show the image
+plt.show()
 net.blobs['data'].data[...] = transformed_image						# copy the image data into the memory allocated for the net
 
 output = net.forward()		# forward pass
 
 output_prob = output['prob'][0]  					# the output probability vector for the first image in the batch
-print('predicted class is:', output_prob.argmax())	# predicted class number
+print('----------------predicted class is:', output_prob.argmax())	# predicted class number, expected 281, which corresponds to tabby cat
+print("----------------predicted class's probability is:", max(output_prob))
+print('')
+
+# for each layer, show the output shape
+for layer_name, blob in net.blobs.items():
+    print(layer_name + '\t' + str(blob.data.shape))
+    # print(layer_name + '\t' + str(blob.data))			# this will print the data instead of its shape
+print('')
+
+'''	Parameter shapes. The parameters are exposed as another OrderedDict, net.params. 
+	We need to index the resulting values with either [0] for weights or [1] for biases.
+	The param shapes typically have the form:
+		(output_channels, input_channels, filter_height, filter_width) => for the weights
+		(output_channels,) => for the biases
+'''
+print("layer\tweights_shape biases_shape")
+for layer_name, param in net.params.items():
+    print(layer_name + '\t' + str(param[0].data.shape), str(param[1].data.shape))
