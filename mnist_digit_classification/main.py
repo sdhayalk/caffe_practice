@@ -5,7 +5,20 @@ references from:
 	https://stackoverflow.com/questions/32379878/cheat-sheet-for-caffe-pycaffe
 '''
 
+'''
+Steps for entire data preprocessing, train, validation, test
+	Step 1) load dataset and save it as HDF5
+	Step 2) define the network in .prototxt
+	Step 3) define the solver in .prototxt
+	Step 4) load the network, perform training using solver
+	Step 5) test using test set
+'''
 import caffe
+from data_preprocessing import convert_to_HDF5
+
+#--- Step 1) ---
+
+dataset_train_path = 'G:/DL/mnist_data_for_caffe/train.csv'
 
 USE_GPU = True
 if USE_GPU:
