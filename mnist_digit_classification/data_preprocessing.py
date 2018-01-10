@@ -2,7 +2,7 @@ import numpy as np
 import csv
 import h5py
 
-def get_dataset_features_labels_np(dataset_path):
+def get_dataset_features_labels_np(dataset_path, normalize):
     dataset = []
     first_line_flag = True
 
@@ -21,6 +21,7 @@ def get_dataset_features_labels_np(dataset_path):
 
     dataset = np.array(dataset)
     dataset_features = np.array(dataset[:, 1:], dtype=np.float32)
+    dataset_features = dataset_features / 255.0
     dataset_labels_temp = np.array(dataset[:, 0], dtype='int')
 
     dataset_labels = []
@@ -32,8 +33,8 @@ def get_dataset_features_labels_np(dataset_path):
 
     return dataset_features.reshape((dataset_features.shape[0],1,28,28)), dataset_labels
 
-def convert_to_HDF5(dataset_path, hdf5_filename):
-    dataset_features, dataset_labels = get_dataset_features_labels_np(dataset_path)
+def convert_to_HDF5(dataset_path, hdf5_filename, normalize=True):
+    dataset_features, dataset_labels = get_dataset_features_labels_np(dataset_path, normalize)
     print('dataset_features.shape:', dataset_features.shape,' dataset_labels.shape:', dataset_labels.shape)
 
     with h5py.File(hdf5_filename, 'w') as f:

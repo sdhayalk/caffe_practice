@@ -7,19 +7,15 @@ name: "cnn_network"
 # 	the scale is a number that will be multiplied with all the values (pixel values), thus making then range from [0,1]. It is equivalent to 1/256
 layer {
   name: "mnist"
-  type: "Data"
+  type: "HDF5Data"
   top: "data"
   top: "label"
   include {
     phase: TRAIN
   }
-  transform_param {
-    scale: 0.00390625
-  }
-  data_param {
-    source: "G:/DL/mnist_data_for_caffe/train_data_lmdb"
+  hdf5_data_param {
+    source: "G:/DL/mnist_data_for_caffe/dataset_train.txt"
     batch_size: 64
-    backend: LMDB
   }
 }
 
@@ -28,19 +24,15 @@ layer {
 # 	it produces two blobs: data blob and label blob
 layer {
   name: "mnist"
-  type: "Data"
+  type: "HDF5Data"
   top: "data"
   top: "label"
   include {
     phase: TEST
   }
-  transform_param {
-    scale: 0.00390625
-  }
-  data_param {
-    source: "G:/DL/mnist_data_for_caffe/train_data_lmdb"
-    batch_size: 100
-    backend: LMDB
+  hdf5_data_param {
+    source: "G:/DL/mnist_data_for_caffe/dataset_train.txt"
+    batch_size: 64
   }
 }
 
@@ -245,7 +237,7 @@ layer {
 }
 layer {
   name: "loss"
-  type: "SoftmaxWithLoss"
+  type: "SigmoidCrossEntropyLoss"
   bottom: "ip2"
   bottom: "label"
   top: "loss"

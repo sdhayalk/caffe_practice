@@ -9,41 +9,44 @@ references from:
 '''
 Steps for entire data preprocessing, train, validation, test
 	Step 1) load dataset and save it as HDF5
-	Step 2) define the network in .prototxt
-	Step 3) define the solver in .prototxt
+	Step 2) define the network in .prototxt and include its path
+	Step 3) define the solver in .prototxt and include its path
 	Step 4) load the network, perform training using solver
 	Step 5) test using test set
 '''
 import caffe
+import os
 from data_preprocessing import convert_to_HDF5
+from utils import display_stats
 
 #--- Step 1) ---
 
-dataset_train_path = 'G:/DL/mnist_data_for_caffe/train.csv'
-dataset_train_hdf5_path = 'G:/DL/mnist_data_for_caffe/dataset_train.hdf5'
-convert_to_HDF5(dataset_train_path, dataset_train_hdf5_path)
+DATASET_TRAIN_PATH = 'G:/DL/mnist_data_for_caffe/train.csv'
+DATASET_TRAIN_HDF5_PATH = 'G:/DL/mnist_data_for_caffe/dataset_train.hdf5'
+if not os.path.exists(DATASET_TRAIN_HDF5_PATH):
+	convert_to_HDF5(DATASET_TRAIN_PATH, DATASET_TRAIN_HDF5_PATH)
 
-# USE_GPU = True
-# if USE_GPU:
-#     caffe.set_device(0)
-#     caffe.set_mode_gpu()
-# else:
-#     caffe.set_mode_cpu()
+USE_GPU = True
+if USE_GPU:
+    caffe.set_device(0)
+    caffe.set_mode_gpu()
+else:
+    caffe.set_mode_cpu()
 
-# CNN_NETWORK_PATH = "G:/DL/caffe_practice/mnist_digit_classification/cnn_network.prototxt"
-# CNN_SOLVER_PATH = "G:/DL/caffe_practice/mnist_digit_classification/cnn_solver.prototxt"
 
-# net = caffe.Net(CNN_NETWORK_PATH, caffe.TRAIN) # caffe.TEST for testing
-# solver = caffe.AdamSolver(CNN_SOLVER_PATH)
+#--- Step 2) and Step 3) ---
+CNN_NETWORK_PATH = "G:/DL/caffe_practice/mnist_digit_classification/cnn_network.prototxt"
+CNN_SOLVER_PATH = "G:/DL/caffe_practice/mnist_digit_classification/cnn_solver.prototxt"
 
-# print("Network layers information:")
-# for name, layer in zip(net._layer_names, net.layers):
-#     print("{:<7}: {:17s}({} blobs)".format(name, layer.type, len(layer.blobs)))
-# print("Network blobs information:")
-# for name, blob in net.blobs.items():
-#     print("{:<7}: {}".format(name, blob.data.shape))
-# print('net.inputs:', net.inputs)
-# print('net.outputs:', net.outputs)
+
+#--- Step 4) ---
+
+net = caffe.Net(CNN_NETWORK_PATH, caffe.TRAIN) # caffe.TEST for testing
+solver = caffe.get_solver(CNN_SOLVER_PATH)
+solver.solve()
+
+display_stats(net)
+
 
 # solver.solve()
 
