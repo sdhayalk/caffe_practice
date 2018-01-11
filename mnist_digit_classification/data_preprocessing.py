@@ -2,7 +2,7 @@ import numpy as np
 import csv
 import h5py
 
-def get_dataset_features_labels_np(dataset_train_path, dataset_validation_path, normalize, ratio_one_is_to):
+def get_dataset_features_labels_np(dataset_train_path, normalize, ratio_one_is_to):
     dataset_train = []
     dataset_validation = []
     first_line_flag = True
@@ -38,15 +38,16 @@ def get_dataset_features_labels_np(dataset_train_path, dataset_validation_path, 
 
     return dataset_train_features.reshape((dataset_train_features.shape[0],1,28,28)), dataset_validation_features.reshape((dataset_validation_features.shape[0],1,28,28)), dataset_train_labels, dataset_validation_lables
 
+
 def convert_to_HDF5(dataset_train_path, hdf5_train_filename, hdf5_validation_filename, normalize=True, ratio_one_is_to=7):
-    dataset_train_features, dataset_train_labels, dataset_validation_features, dataset_validation_labels = get_dataset_features_labels_np(dataset_train_path, normalize, ratio_one_is_to)
+    dataset_train_features, dataset_validation_features, dataset_train_labels, dataset_validation_labels = get_dataset_features_labels_np(dataset_train_path, normalize, ratio_one_is_to)
     print('dataset_train_features.shape:', dataset_train_features.shape,' dataset_train_labels.shape:', dataset_train_labels.shape)
     print('dataset_validation_features.shape:', dataset_validation_features.shape,' dataset_validation_labels.shape:', dataset_validation_labels.shape)
 
     with h5py.File(hdf5_train_filename, 'w') as f:
         f['data'] = dataset_train_features
         f['label'] = dataset_train_labels
-        
+
     with h5py.File(hdf5_validation_filename, 'w') as f:
         f['data'] = dataset_validation_features
         f['label'] = dataset_validation_labels

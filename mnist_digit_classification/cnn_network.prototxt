@@ -31,7 +31,7 @@ layer {
     phase: TEST
   }
   hdf5_data_param {
-    source: "G:/DL/mnist_data_for_caffe/dataset_train.txt"
+    source: "G:/DL/mnist_data_for_caffe/dataset_validation.txt"
     batch_size: 64
   }
 }

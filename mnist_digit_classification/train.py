@@ -47,4 +47,3 @@ net = caffe.Net(CNN_NETWORK_PATH, caffe.TRAIN) # caffe.TEST for testing
 solver = caffe.get_solver(CNN_SOLVER_PATH)
 display_stats(net)
 solver.solve()
-
