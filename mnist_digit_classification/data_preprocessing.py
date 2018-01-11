@@ -21,7 +21,8 @@ def get_dataset_features_labels_np(dataset_path, normalize):
 
     dataset = np.array(dataset)
     dataset_features = np.array(dataset[:, 1:], dtype=np.float32)
-    dataset_features = dataset_features / 255.0
+    if normalize:
+        dataset_features = dataset_features / 255.0
     dataset_labels_temp = np.array(dataset[:, 0], dtype='int')
 
     dataset_labels = []
