@@ -1,6 +1,6 @@
 name: "cnn_network"
 input: "data"
-input_dim: 64 # batch size
+input_dim: 100 # batch size
 input_dim: 1  # number of channels
 input_dim: 28 # dim 1
 input_dim: 28 # dim 2
@@ -192,4 +192,11 @@ layer {
       type: "constant"
     }
   }
+}
+
+layer {
+  name: "prob"
+  type: "Softmax"
+  bottom: "ip2"
+  top: "prob"
 }
