@@ -53,3 +53,27 @@ def convert_to_HDF5(dataset_train_path, hdf5_train_filename, hdf5_validation_fil
         f['label'] = dataset_validation_labels
 
     print("Saved as HDF5")
+
+
+def get_test_dataset_features(dataset_path, normalize=True):
+    dataset = []
+    first_line_flag = True
+
+    with open(dataset_path) as f:
+        dataset_csv_reader = csv.reader(f, delimiter=",")
+        for line in dataset_csv_reader:
+            if first_line_flag:
+                first_line_flag = False
+                continue
+
+            temp_line = []
+            for element in line:
+                temp_line.append(float(element))
+
+            dataset.append(temp_line)
+
+    dataset_features = np.array(dataset, dtype='float')
+    if normalize:
+        dataset_features = dataset_features / 255.0
+
+    return dataset_features.reshape((dataset_features.shape[0],1,28,28))
