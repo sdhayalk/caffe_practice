@@ -41,3 +41,11 @@ for i in range(0, int(NUM_EXAMPLES/BATCH_SIZE)):
 	else:
 		predicted_labels = np.concatenate((predicted_labels, predicted_batch_x['prob']), axis=0)
 
+# writing predictions to file
+with open('caffe_predictions.csv','w') as file:	
+	file.write('ImageId,Label')
+	file.write('\n')
+
+	for i in range(0, predicted_labels.shape[0]):
+		file.write(str(i+1) + ',' + str(predicted_labels[i].argmax()))
+		file.write('\n')
