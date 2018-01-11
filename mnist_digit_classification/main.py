@@ -23,8 +23,10 @@ from utils import display_stats
 
 DATASET_TRAIN_PATH = 'G:/DL/mnist_data_for_caffe/train.csv'
 DATASET_TRAIN_HDF5_PATH = 'G:/DL/mnist_data_for_caffe/dataset_train.hdf5'
+DATASET_VALIDATION_HDF5_PATH = 'G:/DL/mnist_data_for_caffe/dataset_validation.hdf5'
+
 if not os.path.exists(DATASET_TRAIN_HDF5_PATH):
-	convert_to_HDF5(DATASET_TRAIN_PATH, DATASET_TRAIN_HDF5_PATH)
+	convert_to_HDF5(DATASET_TRAIN_PATH, DATASET_TRAIN_HDF5_PATH, DATASET_VALIDATION_HDF5_PATH, normalize=True, ratio_one_is_to=7)
 
 USE_GPU = True
 if USE_GPU:
@@ -43,10 +45,6 @@ CNN_SOLVER_PATH = "G:/DL/caffe_practice/mnist_digit_classification/cnn_solver.pr
 
 net = caffe.Net(CNN_NETWORK_PATH, caffe.TRAIN) # caffe.TEST for testing
 solver = caffe.get_solver(CNN_SOLVER_PATH)
-solver.solve()
-
 display_stats(net)
-
-
-# solver.solve()
+solver.solve()
 

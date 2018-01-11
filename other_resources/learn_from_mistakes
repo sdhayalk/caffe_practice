@@ -6,3 +6,5 @@ https://stackoverflow.com/questions/34234350/accuracy-issue-in-caffe
 "SoftmaxWithLoss" or "InfogainLoss": for predicting discrete labels
 
 2) 
+Do not convert multi-class discrete labels into one hot vector. Leave it as it is. Caffe will take care of it.
+If you convert into one hot vector, it will give error if you have 'Accuracy' layer.
