@@ -1,0 +1,8 @@
+1) 
+https://stackoverflow.com/questions/34234350/accuracy-issue-in-caffe
+
+"EuclideanLoss": for predicting continuous values (regression tasks)
+"SigmoidCrossEntropyLoss": for predicting binary outputs
+"SoftmaxWithLoss" or "InfogainLoss": for predicting discrete labels
+
+2) 
